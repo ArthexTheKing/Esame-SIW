@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+    <head th:fragment="headfiles(titolo)">
+        <title th:text="${titolo}"></title>
+        <!-- Metadata info -->
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Bootstrap CSS -->
+        <link th:href="@{/layout/bootstrap/css/bootstrap.css}" rel="stylesheet">
+        <!-- Custom CSS -->
+        <link th:href="@{/layout/css/style.css}" rel="stylesheet">
+        <!-- Fontawesome CSS -->
+        <link th:href="@{/layout/fontawesome/css/all.css}" rel="stylesheet">
+    </head>
+
+    <body class="mx-0 mx-md-3 shadow" th:fragment="body(titolo,main)">
+
+        <!-- Navbar del sito -->
+        <nav class="navbar navbar-dark bg-primary bg-gradient navbar-expand-lg">
+            <div class="container-fluid">
+                <a class="navbar-brand" sec:authorize="isAuthenticated()" th:href="@{/home}"
+                    th:text="#{frag.base.nav.titolo}">
+                </a>
+                <a class="navbar-brand" sec:authorize="isAnonymous()" th:href="@{/index}"
+                    th:text="#{frag.base.nav.titolo}">
+                </a>
+                <div sec:authorize="isAuthenticated()" class="nav-item dropstart">
+                    <a class="btn btn-danger" th:href="@{/logout}">
+                        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                        <span th:text="#{frag.base.nav.logout}"></span>
+                    </a>
+                </div>
+            </div>
+        </nav>
+
+        <header class="bg-header text-light text-center py-2 mt-2">
+            <th:block th:replace="${titolo}"></th:block>
+        </header>
+
+        <!-- Elemento main delle pagine -->
+        <main th:replace="${main}"></main>
+
+        <!-- Footer -->
+        <footer class="py-2 bg-primary bg-gradient text-light text-center">
+            <span th:text="#{frag.base.footer.titolo} + ' ' + #{frag.base.footer.versione} + ' - '"></span>
+            <span sec:authorize="isAnonymous()" th:text="#{frag.base.footer.anonimo}"></span>
+            <span sec:authorize="isAuthenticated()" sec:authentication="name"></span>
+            <span th:text="' @ ' + #{frag.base.footer.anno}"></span>
+        </footer>
+
+        <!-- Script -->
+        <script th:src="@{/layout/bootstrap/js/bootstrap.bundle.js}"></script>
+    </body>
+
+</html>

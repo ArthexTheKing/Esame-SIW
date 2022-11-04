@@ -1,0 +1,10 @@
+{
+  "name": "spring-certificazioni-frontend",
+  "version": "1.0.0",
+  "description": "Librerie Frontend Progetto",
+  "author": "Alessandro di Mario",
+  "license": "ISC",
+  "dependencies": {
+    "bootstrap": "^5.2.0"
+  }
+}

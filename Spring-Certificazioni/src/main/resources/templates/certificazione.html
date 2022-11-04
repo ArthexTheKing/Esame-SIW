@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+    <head th:replace="frags/base :: headfiles(#{certificazione.titolo})"></head>
+
+    <body th:replace="frags/base :: body(~{:: h3#header}, ~{:: main})">
+
+        <h3 id="header">
+            <span th:text="${certificazione.nome}" sec:authorize="hasAuthority('SEGRETERIA')"></span>
+            <span th:text="#{certificazione.header}" sec:authorize="hasAuthority('STUDENTE')"></span>
+            <i class="fa-solid fa-certificate"></i>
+        </h3>
+
+        <main class="container-fluid p-3 bg-light mx-0" th:object="${certificazione}">
+            <!-- Alert -->
+            <section class="text-center container mb-2">
+                <!-- Alert Cancellazione Studente -->
+                <div th:if="${cancellazione}" class="alert alert-success" role="alert"
+                    th:text="#{certificazione.esame.alert.cancellazione}">
+                </div>
+                <!-- Alert Cancellazione Studente -->
+                <div th:if="${esameCreato}" class="alert alert-success" role="alert"
+                    th:text="#{certificazione.esame.alert.creato}">
+                </div>
+                <!-- Alert Prenotazione Fallita -->
+                <div th:if="${prenotazioneFallita}" class="alert alert-danger" role="alert"
+                    th:text="#{certificazione.esame.alert.prenotazioneFallita}">
+                </div>
+                <!-- Alert Prenotazione gia effettuata -->
+                <div th:if="${giaPrenotato}" class="alert alert-danger" role="alert"
+                    th:text="#{certificazione.alert.prenotazioneGiaEffettuata}">
+                </div>
+            </section>
+            <!-- Certificazione -->
+            <section class="container bg-white border rounded-3 shadow p-2 mb-2">
+                <div class="input-group">
+                    <div class="input-group-text p-3 form-icon-container">
+                        <i class="fa-solid fa-certificate"></i>
+                    </div>
+                    <div class="form-floating">
+                        <input id="nome" type="text" class="form-control" placeholder=" "
+                            th:field="*{nome}" readonly>
+                        <label for="nome" th:text="#{certificazione.label.nome}"></label>
+                    </div>
+                    <div class="form-floating">
+                        <input id="cognome" type="text" class="form-control" placeholder=" "
+                            th:field="*{areaDisciplinare}" readonly>
+                        <label for="cognome" th:text="#{certificazione.label.areaDisciplinare}"></label>
+                    </div>
+                </div>
+            </section>
+            <!-- Esami -->
+            <section class="container bg-white border rounded-3 shadow p-2">
+                <div class="d-flex mb-2">
+                    <h4 th:text="#{certificazione.esami.titolo}"></h4>
+                    <a class="btn btn-primary ms-auto" th:href="@{'/admin/esami/certificazione/' + ${certificazione.id}}">
+                        <span th:text="#{certificazione.esame.crea}"></span>
+                        <i class="fa-solid fa-plus"></i>
+                    </a>
+                </div>
+                <div th:if="${#lists.isEmpty(certificazione.esami)}" class="alert alert-danger"
+                    role="alert" th:text="#{certificazione.esame.alert.noEsami}">
+                </div>
+                <table th:unless="${#lists.isEmpty(certificazione.esami)}" class="table text-center">
+                    <thead>
+                        <tr>
+                            <th scope="col" th:text="#{certificazione.esame.data}"></th>
+                            <th scope="col" th:text="#{certificazione.esame.aula}"></th>
+                            <th scope="col">
+                                <!-- Per le operazioni -->
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="esame : *{esami}">
+                            <td th:text="${#temporals.format(esame.data, 'dd/MM/yyyy HH:mm')}"></td>
+                            <td th:text="${esame.aula}"></td>
+                            <td>
+                                <div sec:authorize="hasAuthority('STUDENTE')">
+                                    <a class="btn btn-info" th:href="@{'/prenotazioni/esame/' + ${esame.id}}">
+                                        <span th:text="#{certificazione.esame.prenota}"></span>
+                                        <i class="fa-solid fa-book-bookmark"></i>
+                                    </a>
+                                </div>
+                                <div class="dropdown-center" sec:authorize="hasAuthority('SEGRETERIA')">
+                                    <button class="btn btn-info dropdown-toggle" type="button"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="fa-solid fa-wrench"></i>
+                                        <span th:text="#{certificazione.esame.gestisci}"></span>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a class="dropdown-item" th:href="@{'/admin/esami/' + ${esame.id} + '/modify'}">
+                                                <span th:text="#{certificazione.esame.modifica}"></span>
+                                                <i class="fa-solid fa-screwdriver-wrench"></i>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="btn btn-danger" th:href="@{'/admin/esami/' + ${esame.id} + '/delete'}">
+                                                <span th:text="#{certificazione.cancellaModal.conferma}"></span>
+                                                <i class="fa-solid fa-trash-can"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+        </main>
+
+    </body>
+
+</html>

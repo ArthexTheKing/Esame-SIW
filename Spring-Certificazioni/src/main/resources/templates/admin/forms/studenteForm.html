@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+    <head th:replace="frags/base :: headfiles(#{admin.forms.studenteForm.titolo})"></head>
+
+    <body th:replace="frags/base :: body(~{:: h3#header}, ~{:: main})">
+
+        <h3 id="header">
+            <span th:text="#{admin.forms.studenteForm.header}"></span>
+            <i class="fa-solid fa-graduation-cap"></i>
+        </h3>
+
+        <main class="container-fluid p-3 bg-light mx-0">
+            <form th:action="@{/admin/studenti}" method="post">
+                <!-- Sezione Credenziali della Form -->
+                <section class="container mb-2" th:object="${credenziali}">
+                    <h4 class="text-center" th:text="#{admin.forms.sottotitolo.credenziali}"></h4>
+                    <!-- Riga unica della Form Credenziali -->
+                    <div class="row">
+                        <!-- Input Username Studente -->
+                        <div class="col-12 col-md-6">
+                            <div class="form-floating">
+                                <input id="username" type="text" class="form-control" placeholder=" " th:field="*{username}">
+                                <label for="username" th:text="#{admin.forms.label.credenziali.username}"></label>
+                            </div>
+                            <div class="alert alert-danger mt-1" th:if="${#fields.hasErrors('username')}"
+                                role="alert" th:errors="*{username}">
+                            </div>
+                        </div>
+                        <!-- Input Password Studente -->
+                        <div class="col-12 col-md-6">
+                            <div class="form-floating">
+                                <input id="password" type="password" class="form-control" placeholder=" " th:field="*{password}">
+                                <label for="password" th:text="#{admin.forms.label.credenziali.password}"></label>
+                            </div>
+                            <div class="alert alert-danger mt-1" th:if="${#fields.hasErrors('password')}"
+                                role="alert" th:errors="*{password}">
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Sezione Studente della Form -->
+                <section class="container mb-2" th:object="${studente}">
+                    <h4 class="text-center" th:text="#{admin.forms.sottotitolo.studente}"></h4>
+                    <!-- Prima riga della Form Studente -->
+                    <div class="row mb-2">
+                        <!-- Input Nome Studente -->
+                        <div class="col-12 col-md-6">
+                            <div class="form-floating">
+                                <input id="nome" type="text" class="form-control" placeholder=" " th:field="*{nome}">
+                                <label for="nome" th:text="#{admin.forms.label.studente.nome}"></label>
+                            </div>
+                            <div class="alert alert-danger mt-1" th:if="${#fields.hasErrors('nome')}"
+                                role="alert" th:errors="*{nome}">
+                            </div>
+                        </div>
+                        <!-- Input Cognome Studente -->
+                        <div class="col-12 col-md-6">
+                            <div class="form-floating">
+                                <input id="cognome" type="text" class="form-control" placeholder=" " th:field="*{cognome}">
+                                <label for="cognome" th:text="#{admin.forms.label.studente.cognome}"></label>
+                            </div>
+                            <div class="alert alert-danger mt-1" th:if="${#fields.hasErrors('cognome')}"
+                                role="alert" th:errors="*{cognome}">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Seconda Riga della Form Studente -->
+                    <div class="row">
+                        <!-- Input Email Studente -->
+                        <div class="col-12 col-md-4">
+                            <div class="form-floating">
+                                <input id="email" type="email" class="form-control" placeholder=" " th:field="*{email}">
+                                <label for="email" th:text="#{admin.forms.label.studente.email}"></label>
+                            </div>
+                            <div class="alert alert-danger mt-1" th:if="${#fields.hasErrors('email')}"
+                                role="alert" th:errors="*{email}">
+                            </div>
+                        </div>
+                        <!-- Input Numero di Telefono Studente -->
+                        <div class="col-12 col-md-4">
+                            <div class="form-floating">
+                                <input id="telefono" type="number" class="form-control" placeholder=" " th:field="*{numeroDiTelefono}">
+                                <label for="telefono" th:text="#{admin.forms.label.studente.numeroDiTelefono}"></label>
+                            </div>
+                            <div class="alert alert-danger mt-1" th:if="${#fields.hasErrors('numeroDiTelefono')}"
+                                role="alert" th:errors="*{numeroDiTelefono}">
+                            </div>
+                        </div>
+                        <!-- Input Data di Nascita Studente -->
+                        <div class="col-12 col-md-4">
+                            <div class="form-floating">
+                                <input id="data" type="date" class="form-control" placeholder=" " th:field="*{dataDiNascita}">
+                                <label for="data" th:text="#{admin.forms.label.studente.dataDiNascita}"></label>
+                            </div>
+                            <div class="alert alert-danger mt-1" th:if="${#fields.hasErrors('dataDiNascita')}"
+                                role="alert" th:errors="*{dataDiNascita}">
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Sezione Indirizzo della Form -->
+                <section class="container mb-2" th:object="${indirizzo}">
+                    <h4 class="text-center" th:text="#{admin.forms.sottotitolo.indirizzo}"></h4>
+                    <!-- Riga unica della Form Indirizzo -->
+                    <div class="row">
+                        <!-- Input Via Indirizzo -->
+                        <div class="col-12 col-md-4">
+                            <div class="form-floating">
+                                <input id="via" type="text" class="form-control" placeholder=" " th:field="*{via}">
+                                <label for="via" th:text="#{admin.forms.label.indirizzo.via}"></label>
+                            </div>
+                            <div class="alert alert-danger mt-1" th:if="${#fields.hasErrors('via')}"
+                                role="alert" th:errors="*{via}">
+                            </div>
+                        </div>
+                        <!-- Input Città Indirizzo -->
+                        <div class="col-12 col-md-4">
+                            <div class="form-floating">
+                                <input id="citta" type="text" class="form-control" placeholder=" " th:field="*{citta}">
+                                <label for="citta" th:text="#{admin.forms.label.indirizzo.citta}"></label>
+                            </div>
+                            <div class="alert alert-danger mt-1" th:if="${#fields.hasErrors('citta')}"
+                                role="alert" th:errors="*{citta}">
+                            </div>
+                        </div>
+                        <!-- Input CAP Indirizzo -->
+                        <div class="col-12 col-md-4">
+                            <div class="form-floating">
+                                <input id="cap" type="number" class="form-control" placeholder=" " th:field="*{cap}">
+                                <label for="cap" th:text="#{admin.forms.label.indirizzo.cap}"></label>
+                            </div>
+                            <div class="alert alert-danger mt-1" th:if="${#fields.hasErrors('cap')}"
+                                role="alert" th:errors="*{cap}">
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!-- Conferma -->
+                <div class="container col-12 col-md-4 d-grid">
+                    <button class="btn btn-primary" type="submit">
+                        <i class="fa-solid fa-floppy-disk"></i>
+                        <span th:text="#{admin.forms.studenteForm.submit}"></span>
+                    </button>
+                </div>
+            </form>
+        </main>
+
+    </body>
+
+</html>

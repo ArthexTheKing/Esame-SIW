@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+    <head th:replace="frags/base :: headfiles(#{admin.forms.certificazioneForm.titolo})"></head>
+
+    <body th:replace="frags/base :: body(~{:: h3#header}, ~{:: main})">
+
+        <h3 id="header">
+            <span th:text="#{admin.forms.certificazioneForm.header}"></span>
+            <i class="fa-solid fa-certificate"></i>
+        </h3>
+
+        <main class="container-fluid p-3 bg-light mx-0">
+            <form th:action="@{/admin/certificazioni}" method="post">
+                <!-- Sezione Certificazione -->
+                <section class="container mb-2" th:object="${certificazione}">
+                    <h4 class="text-center" th:text="#{admin.forms.sottotitolo.certificazione}"></h4>
+                    <!-- Input Nome Certificazione -->
+                    <div class="container col-12 col-md-5 mb-2">
+                        <div class="form-floating">
+                            <input id="nome" type="text" class="form-control" placeholder=" " th:field="*{nome}">
+                            <label for="nome" th:text="#{admin.forms.label.certificazione.nome}"></label>
+                        </div>
+                        <div class="alert alert-danger mt-1" th:if="${#fields.hasErrors('nome')}" role="alert"
+                            th:errors="*{nome}">
+                        </div>
+                    </div>
+                    <!-- Input Area Disciplinare Certificazione -->
+                    <div class="container col-12 col-md-5">
+                        <div class="form-floating">
+                            <input id="nome" type="text" class="form-control" placeholder=" "
+                                th:field="*{areaDisciplinare}">
+                            <label for="nome" th:text="#{admin.forms.label.certificazione.areaDisciplinare}"></label>
+                        </div>
+                        <div class="alert alert-danger mt-1" th:if="${#fields.hasErrors('areaDisciplinare')}"
+                            role="alert" th:errors="*{areaDisciplinare}">
+                        </div>
+                    </div>
+                </section>
+                <!-- Conferma -->
+                <div class="container col-12 col-md-4 d-grid">
+                    <button class="btn btn-primary" type="submit">
+                        <i class="fa-solid fa-floppy-disk"></i>
+                        <span th:text="#{admin.forms.certificazioneForm.submit}"></span>
+                    </button>
+                </div>
+            </form>
+        </main>
+
+    </body>
+
+</html>

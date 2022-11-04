@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+    <head th:replace="frags/base :: headfiles(#{studente.titolo})"></head>
+
+    <body th:replace="frags/base :: body(~{:: h3#header}, ~{::main})">
+
+        <h3 id="header">
+            <span th:text="#{studente.header}" sec:authorize="hasAuthority('STUDENTE')"></span>
+            <span th:text="#{admin.studente.header}" sec:authorize="hasAuthority('SEGRETERIA')"></span>
+            <i class="fa-solid fa-house"></i>
+        </h3>
+
+        <main class="container-fluid p-3 bg-light mx-0" th:object="${studente}">
+            <!-- Sezione Utente -->
+            <section class="container mb-2">
+                <h4 class="text-center">
+                    <div th:text="#{admin.studente.sottotitolo.studente}"
+                        sec:authorize="hasAuthority('SEGRETERIA')">
+                    </div>
+                    <div th:text="#{studente.sottotitolo.studente}"
+                        sec:authorize="hasAuthority('STUDENTE')">
+                    </div>
+                </h4>
+                <!-- Utente Prima Riga -->
+                <div class="row mb-2">
+                    <!-- Nome e Cognome -->
+                    <div class="col-12">
+                        <div class="input-group">
+                            <div class="input-group-text p-3 form-icon-container">
+                                <i class="fa-regular fa-address-card"></i>
+                            </div>
+                            <div class="form-floating">
+                                <input id="nome" type="text" class="form-control" placeholder=" "
+                                    th:field="*{nome}" readonly>
+                                <label for="nome">
+                                    <div th:text="#{admin.forms.label.studente.nome}"
+                                        sec:authorize="hasAuthority('SEGRETERIA')">
+                                    </div>
+                                    <div th:text="#{studente.label.studente.nome}"
+                                        sec:authorize="hasAuthority('STUDENTE')">
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="form-floating">
+                                <input id="cognome" type="text" class="form-control" placeholder=" "
+                                    th:field="*{cognome}" readonly>
+                                <label for="cognome">
+                                    <div th:text="#{admin.forms.label.studente.cognome}"
+                                        sec:authorize="hasAuthority('SEGRETERIA')">
+                                    </div>
+                                    <div th:text="#{studente.label.studente.cognome}"
+                                        sec:authorize="hasAuthority('STUDENTE')">
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Utente Seconda Riga -->
+                <div class="row">
+                    <!-- Email -->
+                    <div class="col-12 col-md-4">
+                        <div class="input-group">
+                            <div class="input-group-text p-3 form-icon-container">
+                                <i class="fa-regular fa-envelope"></i>
+                            </div>
+                            <div class="form-floating">
+                                <input id="email" type="email" class="form-control" placeholder=" " th:field="*{email}"
+                                    readonly>
+                                <label for="email">
+                                    <div th:text="#{admin.forms.label.studente.email}"
+                                        sec:authorize="hasAuthority('SEGRETERIA')">
+                                    </div>
+                                    <div th:text="#{studente.label.studente.email}"
+                                        sec:authorize="hasAuthority('STUDENTE')">
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Numero di Telefono -->
+                    <div class="col-12 col-md-4">
+                        <div class="input-group">
+                            <div class="input-group-text p-3 form-icon-container">
+                                <i class="fa-solid fa-phone"></i>
+                            </div>
+                            <div class="form-floating">
+                                <input id="telefono" type="number" class="form-control" placeholder=" "
+                                    th:field="*{numeroDiTelefono}" readonly>
+                                <label for="telefono">
+                                    <div th:text="#{admin.forms.label.studente.numeroDiTelefono}"
+                                        sec:authorize="hasAuthority('SEGRETERIA')">
+                                    </div>
+                                    <div th:text="#{studente.label.studente.numeroDiTelefono}"
+                                        sec:authorize="hasAuthority('STUDENTE')">
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Data di Nascita -->
+                    <div class="col-12 col-md-4">
+                        <div class="input-group">
+                            <div class="input-group-text p-3 form-icon-container">
+                                <i class="fa-solid fa-cake-candles"></i>
+                            </div>
+                            <div class="form-floating">
+                                <input id="data" type="date" class="form-control" placeholder=" "
+                                    th:field="*{dataDiNascita}" readonly>
+                                <label for="data">
+                                    <div th:text="#{admin.forms.label.studente.dataDiNascita}"
+                                        sec:authorize="hasAuthority('SEGRETERIA')">
+                                    </div>
+                                    <div th:text="#{studente.label.studente.dataDiNascita}"
+                                        sec:authorize="hasAuthority('STUDENTE')">
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sezione Indirizzo -->
+            <section class="container mb-2">
+                <h4 class="text-center">
+                    <div th:text="#{admin.studente.sottotitolo.indirizzo}"
+                        sec:authorize="hasAuthority('SEGRETERIA')">
+                    </div>
+                    <div th:text="#{studente.sottotitoo.indirizzo}"
+                        sec:authorize="hasAuthority('STUDENTE')">
+                    </div>
+                </h4>
+                <!-- Indirizzo Riga Unica -->
+                <div class="row">
+                    <!-- Via -->
+                    <div class="col-12 col-md-4">
+                        <div class="input-group">
+                            <div class="input-group-text p-3 form-icon-container">
+                                <i class="fa-solid fa-house"></i>
+                            </div>
+                            <div class="form-floating">
+                                <input id="via" type="text" class="form-control" placeholder=" "
+                                    th:field="*{indirizzo.via}" readonly>
+                                <label for="via">
+                                    <div th:text="#{admin.forms.label.indirizzo.via}"
+                                        sec:authorize="hasAuthority('SEGRETERIA')">
+                                    </div>
+                                    <div th:text="#{studente.label.indirizzo.via}"
+                                        sec:authorize="hasAuthority('STUDENTE')">
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Città -->
+                    <div class="col-12 col-md-4">
+                        <div class="input-group">
+                            <div class="input-group-text p-3 form-icon-container">
+                                <i class="fa-solid fa-city"></i>
+                            </div>
+                            <div class="form-floating">
+                                <input id="citta" type="text" class="form-control" placeholder=" "
+                                    th:field="*{indirizzo.citta}" readonly>
+                                <label for="citta">
+                                    <div th:text="#{admin.forms.label.indirizzo.citta}"
+                                        sec:authorize="hasAuthority('SEGRETERIA')">
+                                    </div>
+                                    <div th:text="#{studente.label.indirizzo.citta}"
+                                        sec:authorize="hasAuthority('STUDENTE')">
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Input CAP Indirizzo -->
+                    <div class="col-12 col-md-4">
+                        <div class="input-group">
+                            <div class="input-group-text p-3 form-icon-container">
+                                <i class="fa-solid fa-envelopes-bulk"></i>
+                            </div>
+                            <div class="form-floating">
+                                <input id="cap" type="number" class="form-control" placeholder=" "
+                                    th:field="*{indirizzo.cap}" readonly>
+                                <label for="cap">
+                                    <div th:text="#{admin.forms.label.indirizzo.cap}"
+                                        sec:authorize="hasAuthority('SEGRETERIA')">
+                                    </div>
+                                    <div th:text="#{studente.label.indirizzo.cap}"
+                                        sec:authorize="hasAuthority('STUDENTE')">
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+    </body>
+
+</html>

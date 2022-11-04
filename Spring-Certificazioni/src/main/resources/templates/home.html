@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+    <head th:replace="frags/base :: headfiles(#{home.titolo})"></head>
+
+    <body th:replace="frags/base :: body(~{:: h3#header}, ~{::main})">
+
+        <h3 id="header">
+            <span th:text="#{home.header}"></span>
+            <i class="fa-solid fa-house"></i>
+        </h3>
+
+        <main class="container-fluid p-3 bg-light mx-0">
+            <section class="container row mx-auto">
+                <!-- Dati Personali -->
+                <div class="col-6 col-md-3 text-center" sec:authorize="hasAuthority('STUDENTE')">
+                    <a class="btn btn-outline-primary w-100 py-3" th:href="@{/profilo}">
+                        <i class="fa-solid fa-address-book fa-4x"></i>
+                    </a>
+                    <div th:text="#{home.profilo}"></div>
+                </div>
+                <!-- Certificazioni -->
+                <div class="col-6 col-md-3 text-center">
+                    <a class="btn btn-outline-secondary w-100 py-3" th:href="@{/certificazioni}">
+                        <i class="fa-solid fa-book fa-4x"></i>
+                    </a>
+                    <div>
+                        <p th:text="#{admin.home.certificazioni}" sec:authorize="hasAuthority('SEGRETERIA')"></p>
+                        <p th:text="#{home.certificazioni}" sec:authorize="hasAuthority('STUDENTE')"></p>
+                    </div>
+                </div>
+                <!-- Prenotazioni -->
+                <div class="col-6 col-md-3 text-center" sec:authorize="hasAuthority('STUDENTE')">
+                    <a class="btn btn-outline-secondary w-100 py-3" th:href="@{/prenotazioni}">
+                        <i class="fa-solid fa-book-bookmark fa-4x"></i>
+                    </a>
+                    <div th:text="#{home.prenotazioni}"></div>
+                </div>
+                <!-- Crea Certificazione -->
+                <div class="col-6 col-md-3 text-center" sec:authorize="hasAuthority('SEGRETERIA')">
+                    <a class="btn btn-outline-secondary w-100 py-3" th:href="@{/admin/certificazioni/new}">
+                        <i class="fa-solid fa-book-medical fa-4x"></i>
+                    </a>
+                    <div th:text="#{home.certificazioni.crea}"></div>
+                </div>
+                <!-- Crea Utenti -->
+                <div class="col-6 col-md-3 text-center" sec:authorize="hasAuthority('SEGRETERIA')">
+                    <a class="btn btn-outline-secondary w-100 py-3" th:href="@{/admin/studenti/new}">
+                        <i class="fa-solid fa-user-plus fa-4x"></i>
+                    </a>
+                    <div th:text="#{home.immatricola}"></div>
+                </div>
+                <!-- Gestione Utenti -->
+                <div class="col-6 col-md-3 text-center" sec:authorize="hasAuthority('SEGRETERIA')">
+                    <a class="btn btn-outline-secondary w-100 py-3" th:href="@{/admin/studenti}">
+                        <i class="fa-solid fa-users-gear fa-4x"></i>
+                    </a>
+                    <div th:text="#{home.studenti}"></div>
+                </div>
+            </section>
+        </main>
+
+    </body>
+
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+    <head th:replace="frags/base :: headfiles(#{admin.forms.esameForm.titolo})"></head>
+
+    <body th:replace="frags/base :: body(~{:: h3#header}, ~{:: main})">
+
+        <h3 id="header">
+            <span th:text="#{admin.forms.esameForm.header}"></span>
+            <i class="fa-solid fa-certificate"></i>
+        </h3>
+
+        <main class="container-fluid p-3 bg-light mx-0">
+            <form th:action="@{'/admin/esami/certificazione/' + ${certificazione.id}}" method="post">
+                <section class="container row mb-2 mx-auto" th:object="${esame}">
+                    <!-- Sezione Esame -->
+                    <h4 class="text-center" th:text="#{admin.forms.sottotitolo.esame}"></h4>
+                    <div class="alert alert-danger text-center" role="alert" th:if="${#fields.hasGlobalErrors()}">
+                        <p th:each="err : ${#fields.globalErrors()}" th:text="${err}"></p>
+                    </div>
+                    <!-- Input Id Esame (per modifiche) -->
+                    <input type="hidden" th:field="*{id}">
+                    <!-- Input Aula Esame -->
+                    <div class="container col-12 col-md-6 mb-2">
+                        <div class="form-floating">
+                            <input id="aula" type="text" class="form-control" placeholder=" " th:field="*{aula}">
+                            <label for="aula" th:text="#{admin.forms.label.esame.aula}"></label>
+                        </div>
+                        <div class="alert alert-danger mt-1" th:if="${#fields.hasErrors('aula')}"
+                            role="alert" th:errors="*{aula}">
+                        </div>
+                    </div>
+                    <!-- Input Data Esame -->
+                    <div class="container col-12 col-md-6 mb-2">
+                        <div class="form-floating">
+                            <input id="data" type="datetime-local" class="form-control" placeholder=" " th:field="*{data}">
+                            <label for="data" th:text="#{admin.forms.label.esame.data}"></label>
+                        </div>
+                        <div class="alert alert-danger mt-1" th:if="${#fields.hasErrors('data')}"
+                            role="alert" th:errors="*{data}">
+                        </div>
+                    </div>
+                    <!-- Input Durata Esame -->
+                    <div class="container col-12 col-md-6 mb-2">
+                        <div class="form-floating">
+                            <input id="durata" type="number" class="form-control" placeholder=" " th:field="*{durata}">
+                            <label for="durata" th:text="#{admin.forms.label.esame.durata}"></label>
+                        </div>
+                        <div class="alert alert-danger mt-1" th:if="${#fields.hasErrors('durata')}"
+                            role="alert" th:errors="*{durata}">
+                        </div>
+                    </div>
+                    <!-- Input Certificazione Esame -->
+                    <div class="container col-12 col-md-6 mb-2">
+                        <div class="form-floating">
+                            <input id="certificazione" type="text" class="form-control" placeholder=" " th:field="${certificazione.nome}" readonly>
+                            <label for="certificazione" th:text="#{admin.forms.label.esame.certificazione}"></label>
+                        </div>
+                    </div>
+                    
+                </section>
+                <!-- Conferma -->
+                <div class="container col-12 col-md-4 d-grid">
+                    <button class="btn btn-primary" type="submit">
+                        <i class="fa-solid fa-floppy-disk"></i>
+                        <span th:text="#{admin.forms.esameForm.submit}"></span>
+                    </button>
+                </div>
+            </form>
+        </main>
+
+    </body>
+
+</html>

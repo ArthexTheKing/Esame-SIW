@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+    <head th:replace="frags/base :: headfiles(#{error.titolo} + ${status})"></head>
+
+    <body th:replace="frags/base :: body(~{::h3#header},~{:: main})">
+
+        <h3 id="header">
+            <span th:text="${status} + ' ' + ${error}"></span>
+            <i class="fa-solid fa-triangle-exclamation"></i>
+        </h3>
+
+        <main class="container-fluid p-3 bg-light mx-0">
+            <!-- Errore -->
+            <section class="container">
+                <div class="container py-2 border rounded-2 col-md-8 bg-info bg-opacity-25">
+                    <div>
+                        <span th:text="#{error.causa}"></span>
+                        <span th:text="${exception}"></span>
+                    </div>
+                    <div>
+                        <span th:text="#{error.percorso}"></span>
+                        <span th:text="${path}"></span>
+                    </div>
+                    <div class="container col-3 d-block">
+                        <a class="btn btn-primary" th:href="@{/index}" sec:authorize="isAnonymous()">
+                            <i class="fa-solid fa-house-chimney"></i>
+                            <span th:text="#{error.indietro}"></span>
+                        </a>
+                        <a class="btn btn-primary" th:href="@{/home}" sec:authorize="isAuthenticated()">
+                            <i class="fa-solid fa-house-chimney"></i>
+                            <span th:text="#{error.indietro}"></span>
+                        </a>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+    </body>
+
+</html>
