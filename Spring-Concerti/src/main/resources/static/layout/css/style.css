@@ -1,0 +1,29 @@
+:root {
+    --m-body: 1rem;
+    --c-shadow: #2e2e2e;
+}
+
+body {
+    margin: 0px var(--m-body);
+    box-shadow: 0 2px .3em var(--c-shadow);
+}
+
+header {
+    background: no-repeat left/cover url(/images/concerti-header.jpg);
+    height: 180px;
+    min-width: 180px;
+}
+
+#header-title {
+    font: bold calc(1em + 2 * (100vw - 120px) / 100) 'Dancing Script', cursive, fantasy;
+    text-shadow: 0 0 .3em var(--c-shadow);
+}
+
+.img-icon {
+    width: 128px;
+    height: 128px;
+}
+
+.card-width {
+    width: 18rem;
+}

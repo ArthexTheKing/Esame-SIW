@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+    <head th:replace="fragments/base :: headerfiles(#{concerto.titolo})"></head>
+
+    <body th:replace="fragments/base :: body(~{::main})">
+        <main class="container-fluid px-lg-5 py-3 bg-light">
+            <!-- Descrizione Concerto -->
+            <section class="container px-lg-5">
+                <div class="d-flex flex-wrap align-items-center bg-white p-3 shadow-sm border">
+                    <img class="img-icon" th:src="@{/images/placeholder.jpg}" alt="Immagine Concerto Placeholder">
+                    <div class="ms-3">
+                        <h4 class="mb-3" th:text="${concerto.nome}"></h4>
+                        <div>
+                            <i class="fa-regular fa-calendar-days"></i>
+                            <span>
+                                <span th:text="${giorno + ', '}"></span>
+                                <span th:text="${#temporals.format(concerto.data, 'dd/MM/yyyy')}"></span>
+                                <span th:text="${#temporals.format(concerto.orario, 'HH:mm')}"></span>
+                            </span>
+                        </div>
+                        <div>
+                            <i class="fa-solid fa-location-dot"></i>
+                            <span th:text="${concerto.luogo.nome + ', ' + concerto.luogo.citta}"></span>
+                        </div>
+                    </div>
+                    <!-- Operazioni da Admin -->
+                    <div class="ms-md-auto mt-2 mt-md-0" sec:authorize="hasAuthority('ADMIN')">
+                        <div class="dropdown">
+                            <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                <i class="fa-solid fa-screwdriver-wrench"></i>
+                                <span th:text="#{admin.concerto.operazioni}"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a th:href="@{'/admin/concerti/' + ${concerto.id} + '/modify'}"
+                                        class="dropdown-item">
+                                        <i class="fa-solid fa-wrench"></i>
+                                        <span th:text="#{admin.concerto.modifica}"></span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a th:href="@{'/admin/concerti/' + ${concerto.id} + '/delete'}"
+                                        class="dropdown-item text-danger">
+                                        <i class="fa-solid fa-trash-can"></i>
+                                        <span th:text="#{admin.concerto.cancella}"></span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Elenco Biglietti disponibili -->
+            <section class="container px-lg-5">
+                <div th:if="${prenotazioneEffettuata}" class="mt-2">
+                    <div class="alert alert-success" role="alert" th:text="#{concerto.prenotazione.successo}"></div>
+                </div>
+                <div class="d-flex px-2 my-2">
+                    <h2 th:text="#{concerto.biglietti.titolo}"></h2>
+                    <div class="ms-auto" sec:authorize="hasAuthority('ADMIN')">
+                        <a class="btn btn-primary" th:href="@{'/admin/concerti/' + ${concerto.id} + '/biglietti/new'}">
+                            <i class="fa-solid fa-plus"></i>
+                            <span th:text="#{admin.concerto.biglietto.crea}"></span>
+                        </a>
+                    </div>
+                </div>
+                <div class="d-flex flex-wrap align-items-center bg-white p-3 border"
+                    th:each="biglietto : ${concerto.biglietti}">
+                    <h3 class="my-auto" th:text="${biglietto.nome}"></h3>
+                    <div class="ms-3" th:text="${biglietto.tipo.nome}"></div>
+                    <div class="ms-auto" th:text="${valuta + ' ' + biglietto.prezzo}"></div>
+                    <div sec:authorize="hasAuthority('ADMIN')" class="ms-3">
+                        <div th:text="#{admin.concerto.biglietto.quantita} + ' ' + ${biglietto.quantita}"
+                            class="alert alert-info my-auto" role="alert">
+                        </div>
+                    </div>
+                    <div sec:authorize="hasAuthority('UTENTE')" class="ms-2">
+                        <a th:if="${biglietto.quantita} gt 0" class="btn btn-primary" th:href="@{'/prenotazioni/biglietti/' + ${biglietto.id}}">
+                            <i class="fa-solid fa-bookmark"></i>
+                            <span th:text="#{concerto.biglietti.prenota}"></span>
+                        </a>
+                        <button th:if="${biglietto.quantita} eq 0" class="btn btn-warning" type="button" disabled>
+                            <i class="fa-solid fa-xmark"></i>
+                            <span th:text="#{concerto.biglietti.esauriti}"></span>
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </body>
+
+</html>

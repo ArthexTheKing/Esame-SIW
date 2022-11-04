@@ -1,0 +1,91 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+	<head th:fragment="headerfiles(title)">
+		<title th:text="${title}"></title>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<!-- Bootstrap CSS -->
+		<link rel="stylesheet" th:href="@{/layout/bootstrap/css/bootstrap.css}">
+		<!-- Icone FontAwesome -->
+		<link rel="stylesheet" th:href="@{/layout/fontawesome/css/all.css}">
+		<!-- Custom CSS -->
+		<link rel="stylesheet" th:href="@{/layout/css/style.css}">
+	</head>
+
+	<body class="mx-0 mx-md-3" th:fragment="body(main)">
+
+		<!-- Navbar del sito -->
+		<nav class="navbar navbar-dark bg-primary navbar-expand-lg">
+			<div class="container-fluid">
+				<a class="navbar-brand" sec:authorize="isAuthenticated()" th:href="@{/default}" th:text="#{app.nome}"></a>
+				<a class="navbar-brand" sec:authorize="isAnonymous()" th:href="@{/index}" th:text="#{app.nome}"></a>
+				<div sec:authorize="isAnonymous()" class="nav-item">
+					<a class="btn btn-outline-light" th:href="@{/login}">
+						<i class="fa-solid fa-user"></i>
+						<span th:text="#{nav.area}"></span>
+					</a>
+				</div>
+				<div sec:authorize="isAuthenticated()" class="nav-item dropstart">
+					<button class="btn btn-outline-light dropdown-toggle" type="button" data-bs-toggle="dropdown"
+						aria-expanded="false" th:text="#{nav.area}">
+					</button>
+					<ul class="dropdown-menu">
+						<li>
+							<a class="dropdown-item" th:href="@{/profilo}">
+								<i class="fa-solid fa-user"></i>
+								<span th:text="#{nav.profilo}"></span>
+							</a>
+						</li>
+						<li><hr class="dropdown-divider"></li>
+						<li>
+							<a class="dropdown-item" th:href="@{/logout}">
+								<i class="fa-solid fa-arrow-right-from-bracket"></i>
+								<span th:text="#{app.logout}"></span>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+
+		<!-- Testata -->
+		<header class="d-flex align-items-center">
+			<div class="container-fluid">
+				<h1 id="header-title" class="text-white" th:text="#{header.title}"></h1>
+			</div>
+		</header>
+
+		<!-- Elemento main delle pagine -->
+		<th:block th:replace="${main}"></th:block>
+
+		<!-- Fondo -->
+		<footer class="bg-white border-top border-4 border-light">
+			<div class="container-fluid">
+				<h5 th:text="#{footer.social}"></h5>
+				<div class="h3 d-flex gap-3">
+					<!-- per colorare usare text-{color} -->
+					<i class="fa-brands fa-facebook"></i>
+					<i class="fa-brands fa-instagram"></i>
+					<i class="fa-brands fa-twitter"></i>
+				</div>
+			</div>
+			<div class="container-fluid bg-primary text-light d-flex py-3">
+				<h6 class="m-0" th:text="#{app.nome}"></h6>
+				<div class="ms-auto">
+					<a class="text-light" sec:authorize="isAnonymous()" th:href="@{/login}"
+						th:text="#{app.login}">
+					</a>
+					<a class="text-light" sec:authorize="isAuthenticated()" th:href="@{/logout}"
+						th:text="#{app.logout}">
+					</a>
+				</div>
+			</div>
+		</footer>
+
+		<!-- Script -->
+		<script th:src="@{/layout/bootstrap/js/bootstrap.bundle.js}"></script>
+
+	</body>
+
+</html>

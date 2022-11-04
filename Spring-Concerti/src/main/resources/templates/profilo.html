@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+    <head th:replace="fragments/base :: headerfiles(#{profilo.titolo})"></head>
+
+    <body th:replace="fragments/base :: body(~{::main})">
+
+        <main class="container-fluid px-lg-5 py-3 bg-light">
+            <!-- Informazioni Utente -->
+            <section class="container px-lg-5">
+                <div class="d-flex flex-wrap align-items-center bg-white p-3 border">
+                    <img class="img-icon" th:src="@{/images/placeholder.jpg}" alt="Immagine Concerto Placeholder">
+                    <div class="align-content-between ms-3" th:object="${utente}">
+                        <div th:text="#{profilo.nome} + ' ' + *{nome}"></div>
+                        <div th:text="#{profilo.cognome} + ' ' + *{cognome}"></div>
+                    </div>
+                </div>
+            </section>
+            <!-- Prenotazioni dell'utente -->
+            <section class="container px-lg-5 table-responsive" sec:authorize="hasAuthority('UTENTE')">
+                <table class="table table-striped table-sm text-center">
+                    <thead>
+                        <tr class="table-dark">
+                            <th scope="col" th:text="#{profilo.prenotazione.data}"></th>
+                            <th scope="col" th:text="#{profilo.prenotazione.concerto.nome}"></th>
+                            <th scope="col" th:text="#{profilo.prenotazione.concerto.data}"></th>
+                            <th scope="col" th:text="#{profilo.prenotazione.biglietto.nome}"></th>
+                            <th scope="col" th:text="#{profilo.prenotazione.biglietto.prezzo}"></th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="prenotazione : ${utente.prenotazioni}" class="align-middle">
+                            <td th:text="${#temporals.format(prenotazione.dataPrenotazione, 'dd/MM/yyyy HH:mm')}"></td>
+                            <td th:text="${prenotazione.biglietto.concerto.nome}"></td>
+                            <td>
+                                <span th:text="${#temporals.format(prenotazione.biglietto.concerto.data, 'dd/MM/yyyy') + ', '}"></span>
+                                <span th:text="${#temporals.format(prenotazione.biglietto.concerto.orario, 'HH:mm')}"></span>
+                            </td>
+                            <td th:text="${prenotazione.biglietto.nome}"></td>
+                            <td th:text="${prenotazione.biglietto.prezzo + valuta}"></td>
+                            <td>
+                                <a class="btn btn-danger" th:href="@{'/prenotazioni/' + ${prenotazione.id} + '/delete'}">
+                                    <i class="fa-solid fa-trash-can"></i>
+                                    <span th:text="#{profilo.prenotazione.annulla}"></span>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+
+        </main>
+
+    </body>
+
+</html>

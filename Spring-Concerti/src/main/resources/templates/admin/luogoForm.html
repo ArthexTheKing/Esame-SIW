@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+    <head th:replace="fragments/base :: headerfiles(#{admin.luogoForm.titolo})"></head>
+
+    <body th:replace="fragments/base :: body(~{::main})">
+
+        <main class="container-fluid px-lg-5 py-3 bg-light">
+            <section class="container px-lg-5">
+                <h1 class="text-center" th:text="#{admin.luogoForm.titolo}"></h1>
+                <form th:action="@{/admin/luoghi/new}" method="post" th:object="${luogo}">
+                    <!-- Errori Globali -->
+                    <div class="row mt-3">
+                        <div class="col col-md-4"></div>
+                        <div class="col-12 col-md-4" th:if="${#fields.hasGlobalErrors()}">
+                            <div class="alert alert-danger">
+                                <div th:each="err : ${#fields.globalErrors()}" th:text="${err}"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Form nome luogo -->
+                    <div class="row mt-3">
+                        <div class="col col-md-4"></div>
+                        <div class="col-12 col-md-4">
+                            <div class="form-floating">
+                                <input id="nome" type="text" class="form-control" placeholder=" " th:field="*{nome}">
+                                <label for="nome" th:text="#{admin.luogoForm.nome}"></label>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4 mt-1 mt-md-0" th:if="${#fields.hasErrors('nome')}">
+                            <div class="alert alert-danger" th:errors="*{nome}"></div>
+                        </div>
+                    </div>
+                    <!-- Form citta luogo -->
+                    <div class="row my-3">
+                        <div class="col col-md-4"></div>
+                        <div class="col-12 col-md-4">
+                            <div class="form-floating">
+                                <input id="citta" type="text" class="form-control" placeholder=" " th:field="*{citta}">
+                                <label for="citta" th:text="#{admin.luogoForm.citta}"></label>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4 mt-1 mt-md-0" th:if="${#fields.hasErrors('citta')}">
+                            <div class="alert alert-danger" th:errors="*{citta}"></div>
+                        </div>
+                    </div>
+                    <!-- Conferma -->
+                    <div class="row">
+                        <div class="col col-md-4"></div>
+                        <div class="col-12 col-md-4 d-grid">
+                            <button class="btn btn-primary" type="submit">
+                                <i class="fa-solid fa-floppy-disk"></i>
+                                <span th:text="#{admin.luogoForm.salva}"></span>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </section>
+        </main>
+
+    </body>
+
+</html>

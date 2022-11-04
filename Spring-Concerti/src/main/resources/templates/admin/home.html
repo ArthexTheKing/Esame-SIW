@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+	<head th:replace="fragments/base :: headerfiles(#{admin.home.titolo})"></head>
+
+	<body th:replace="fragments/base :: body(~{::main})">
+
+		<main class="container-fluid px-lg-5 py-3 bg-light">
+			<!-- Card di Operazione -->
+			<section class="container px-lg-5 d-flex flex-wrap justify-content-center gap-2">
+				<div class="card card-width">
+					<img th:src="@{/images/luoghi.png}" th:alt="#{admin.home.card.luoghi.titolo}" class="card-img-top">
+					<div class="card-body">
+						<h5 class="card-title" th:text="#{admin.home.card.luoghi.titolo}"></h5>
+						<p class="card-text" th:text="#{admin.home.card.luoghi.testo}"></p>
+						<a class="btn btn-primary" th:href="@{/admin/luoghi}" th:text="#{admin.home.card.luoghi.link}"></a>
+					</div>
+				</div>
+				<div class="card card-width">
+					<img th:src="@{/images/concerti.jpg}" th:alt="#{admin.home.card.concerti.titolo}" class="card-img-top">
+					<div class="card-body">
+						<h5 class="card-title" th:text="#{admin.home.card.concerti.titolo}"></h5>
+						<p class="card-text" th:text="#{admin.home.card.concerti.testo}"></p>
+						<a class="btn btn-primary" th:href="@{/admin/concerti}" th:text="#{admin.home.card.concerti.link}"></a>
+					</div>
+				</div>
+			</section>
+		</main>
+
+	</body>
+
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+    <head th:replace="fragments/base :: headerfiles(#{admin.bigliettoForm.titolo})"></head>
+
+    <body th:replace="fragments/base :: body(~{::main})">
+
+        <main class="container-fluid px-lg-5 py-3 bg-light">
+            <!-- Form Biglietto -->
+            <section class="container px-lg-5">
+                <h1 class="text-center mb-2" th:text="#{admin.bigliettoForm.titolo}"></h1>
+                <form th:action="@{'/admin/concerti/' + ${concerto.id} + '/biglietti'}" method="post" th:object="${biglietto}">
+                    <!-- Errori Globali -->
+                    <div class="container col-12 col-md-6" th:if="${#fields.hasGlobalErrors()}">
+                        <div class="alert alert-danger" role="alert">
+                            <div th:each="err : ${#fields.globalErrors()}" th:text="${err}"></div>
+                        </div>
+                    </div>
+                    <!-- Prima riga della Form -->
+                    <div class="row mb-2">
+                        <!-- Form Nome Biglietto -->
+                        <div class="col-12 col-md-4 mb-2 mb-md-0">
+                            <div class="form-floating">
+                                <input id="nome" type="text" class="form-control" placeholder=" " th:field="*{nome}">
+                                <label for="nome" th:text="#{admin.bigliettoForm.label.nome}"></label>
+                            </div>
+                            <div class="mt-2" th:if="${#fields.hasErrors('nome')}">
+                                <div class="alert alert-danger" role="alert" th:errors="*{nome}"></div>
+                            </div>
+                        </div>
+                        <!-- Form Costo Biglietto -->
+                        <div class="col-12 col-md-4 mb-2 mb-md-0">
+                            <div class="form-floating">
+                                <input id="prezzo" type="number" step="0.01" class="form-control" placeholder=" " th:field="*{prezzo}">
+                                <label for="prezzo" th:text="#{admin.bigliettoForm.label.prezzo}"></label>
+                            </div>
+                            <div class="mt-2" th:if="${#fields.hasErrors('prezzo')}">
+                                <div class="alert alert-danger" role="alert" th:errors="*{prezzo}"></div>
+                            </div>
+                        </div>
+                        <!-- Form Quantità Biglietto -->
+                        <div class="col-12 col-md-4">
+                            <div class="form-floating">
+                                <input id="quantita" type="number" class="form-control" placeholder=" " th:field="*{quantita}">
+                                <label for="quantita" th:text="#{admin.bigliettoForm.label.quantita}"></label>
+                            </div>
+                            <div class="mt-2" th:if="${#fields.hasErrors('quantita')}">
+                                <div class="alert alert-danger" role="alert" th:errors="*{quantita}"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Seconda Riga della Form -->
+                    <div class="row mb-2">
+                        <!-- Select Tipo di Biglietto -->
+                        <div class="col-12 col-md-6 mb-2 mb-md-0">
+                            <div class="form-floating">
+                                <select id="tipo" class="form-select" th:field="*{tipo}">
+                                    <option th:each="tipo : ${tipi}" th:text="${tipo.nome}" th:value="${tipo}"></option>
+                                </select>
+                                <label for="tipo" th:text="#{admin.bigliettoForm.label.tipo}"></label>
+                            </div>
+                        </div>
+                        <!-- Form Concerto (Solo a fini estetici) -->
+                        <div class="col-12 col-md-6">
+                            <div class="form-floating">
+                                <input id="concerto" type="text" class="form-control" placeholder=" " th:field="${concerto.nome}" disabled>
+                                <label for="concerto" th:text="#{admin.bigliettoForm.label.concerto}"></label>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Conferma -->
+                    <div class="container col-12 col-md-5 d-grid">
+                        <button class="btn btn-primary" type="submit">
+                            <i class="fa-solid fa-floppy-disk"></i>
+                            <span th:text="#{admin.concertoForm.salva}"></span>
+                        </button>
+                    </div>
+                </form>
+            </section>
+        </main>
+
+    </body>
+
+</html>

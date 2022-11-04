@@ -1,0 +1,14 @@
+$primary: #000080;
+
+@import "../node_modules/bootstrap/scss/functions";
+@import "../node_modules/bootstrap/scss/variables";
+
+$body-bg: $gray-300;
+
+$custom-spacers: (
+    custom: $spacer * 2,
+);
+
+$spacers: map-merge($spacers, $custom-spacers);
+
+@import "../node_modules/bootstrap/scss/bootstrap.scss";

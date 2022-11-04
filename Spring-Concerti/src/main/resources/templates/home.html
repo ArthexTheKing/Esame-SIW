@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+	<head th:replace="fragments/base.html :: headerfiles(title='SIW')"></head>
+
+	<body th:replace="fragments/base :: body(~{::main})">
+		<main class="container-fluid px-lg-5 bg-light">
+			<!-- Barra di ricerca -->
+			<section class="container px-lg-5">
+				<h5 class="p-2" th:text="${numeroConcerti} + ' ' + #{home.conta}"></h5>
+				<form class="px-2 pb-1 bg-white shadow-sm border" th:action="@{/ricerca}" method="post" th:object="${ricerca}">
+					<div class="row my-1">
+						<div class="col-12 col-md-3 my-1">
+							<label for="luoghi" class="form-label ms-1" th:text="#{home.luoghi}"></label>
+							<select id="luoghi" class="form-select" th:field="*{luogoId}">
+								<option th:text="#{home.luoghi.default}" th:value="0" selected></option>
+								<option th:each="luogo : ${luoghi}" th:text="${luogo.nome}" th:value="${luogo.id}"></option>
+							</select>
+						</div>
+						<div class="col-6 col-md-3 my-1">
+							<label for="dataDa" class="form-label ms-1" th:text="#{home.data.da}"></label>
+							<input id="dataDa" class="form-control" type="date" th:field="*{dataDa}">
+						</div>
+						<div class="col-6 col-md-3 my-1">
+							<label for="dataA" class="form-label ms-1" th:text="#{home.data.a}"></label>
+							<input id="dataA" class="form-control" type="date" th:field="*{dataA}">
+						</div>
+						<div class="col-12 col-md-3 my-1 d-grid">
+							<button class="btn btn-primary mt-md-custom" type="submit">
+								<i class="fa-solid fa-magnifying-glass me-1"></i>
+								<span th:text="#{home.cerca}"></span>
+							</button>
+						</div>
+					</div>
+				</form>
+			</section>
+			<!-- Elenco Concerti -->
+			<section class="container px-lg-5 mt-2">
+				<div th:each="concerto : ${concerti}" class="d-flex flex-wrap align-items-center bg-white mt-1 p-3 shadow-sm border">
+					<img class="img-icon" th:src="@{/images/placeholder.jpg}">
+					<div class="ms-3">
+						<h4 class="mb-3" th:text="${concerto.nome}"></h4>
+						<div>
+							<i class="fa-regular fa-calendar-days"></i>
+							<span>
+								<span th:text="${concerto.data.getDayOfWeek().getDisplayName(stileData, linguaData)} + ', '"></span>
+								<span th:text="${#temporals.format(concerto.data, 'dd-MM-yyyy')}"></span>
+								<span th:text="${#temporals.format(concerto.orario, 'HH:mm')}"></span>
+							</span>
+						</div>
+						<div>
+							<i class="fa-solid fa-location-dot"></i>
+							<span th:text="${concerto.luogo.nome + ', ' + concerto.luogo.citta}"></span>
+						</div>
+					</div>
+					<div class="mt-2 mx-auto me-md-0 mt-md-0">
+						<a class="btn btn-primary" th:href="@{'/concerti/' + ${concerto.id}}" th:text="#{home.prenota}"></a>
+					</div>
+				</div>
+			</section>
+		</main>
+	</body>
+
+</html>

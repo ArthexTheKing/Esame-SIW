@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+    <head th:replace="fragments/base :: headerfiles(#{admin.concerti.titolo})"></head>
+
+    <body th:replace="fragments/base :: body(~{::main})">
+
+        <main class="container-fluid px-lg-5 py-3 bg-light">
+            <!-- Tabella Elenco Concerti -->
+            <section class="container px-lg-5">
+                <div class="d-flex mb-2">
+                    <h2 th:text="#{admin.concerti.titolo}"></h2>
+                    <div class="ms-auto">
+                        <a class="btn btn-primary" th:href="@{/admin/concerti/new}">
+                            <i class="fa-solid fa-plus"></i>
+                            <span th:text="#{admin.concerti.aggiungi}"></span>
+                        </a>
+                    </div>
+                </div>
+
+                <table class="table table-striped table-sm text-center">
+                    <thead>
+                        <tr class="table-dark">
+                            <th scope="col" th:text="#{admin.concerti.nome}"></th>
+                            <th scope="col" th:text="#{admin.concerti.data}"></th>
+                            <th scope="col" th:text="#{admin.concerti.luogo}"></th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="concerto : ${concerti}" class="align-middle">
+                            <td th:text="${concerto.nome}"></td>
+                            <td>
+                                <span th:text="${#temporals.format(concerto.data, 'dd/MM/yyyy') + ', '}"></span>
+                                <span th:text="${#temporals.format(concerto.orario, 'HH:mm')}"></span>
+                            </td>
+                            <td th:text="${concerto.luogo.nome}"></td>
+                            <td>
+                                <a class="btn btn-primary" th:href="@{'/concerti/' + ${concerto.id}}">
+                                    <i class="fa-solid fa-screwdriver-wrench"></i>
+                                    <span th:text="#{admin.concerti.gestione}"></span>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+        </main>
+
+    </body>
+
+</html>

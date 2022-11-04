@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+	<head th:replace="fragments/base :: headerfiles(#{index.head.titolo})"></head>
+
+	<body th:replace="fragments/base :: body(~{::main})">
+
+		<main class="container-fluid px-lg-5 py-3 bg-light">
+			<!-- Vetrina Concerti -->
+			<section class="container px-lg-5">
+				<h2 class="display-4 text-center" th:text="#{index.titolo}"></h2>
+				<div class="container-fluid d-flex flex-wrap my-2 justify-content-center">
+					<div id="concerto-card" class="card m-1" th:each="concerto : ${concerti}">
+						<div class="card-body text-center m-0">
+							<h3 class="card-title" th:text="${concerto.nome}"></h3>
+							<p class="card-text">
+								<span th:text="${#temporals.format(concerto.data, 'dd/MM/yyyy') + ', '}"></span>
+								<span th:text="${#temporals.format(concerto.orario, 'HH:mm')}"></span>
+								<br>
+								<span th:text="${concerto.luogo.nome} + ', '"></span>
+								<span th:text="${concerto.luogo.citta}"></span>
+							</p>
+							<a class="btn btn-primary" th:href="@{'/concerto/' + ${concerto.id}}"
+								th:text="#{index.prenota}">
+							</a>
+						</div>
+					</div>
+				</div>
+			</section>
+			<!-- Introduzione al Sito -->
+			<section class="container px-lg-5">
+				<h2 class="text-center" th:text="#{app.nome}"></h2>
+				<p class="text-center text-wrap" th:text="#{index.presentazione}"></p>
+			</section>
+		</main>
+
+	</body>
+
+</html>

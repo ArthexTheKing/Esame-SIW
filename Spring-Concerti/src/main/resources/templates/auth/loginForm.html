@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+	<head th:replace="fragments/base :: headerfiles(#{login.titolo})"></head>
+
+	<body th:replace="fragments/base :: body(~{::main})">
+
+		<main class="container-fluid px-lg-5 py-3 bg-light">
+			<section class="container px-lg-5">
+				<div class="text-center">
+					<div class="display-6" th:text="#{login.titolo}"></div>
+				</div>
+				<div class="container alert alert-danger text-center col-md-4 my-2" th:if="${loginError}">
+					<span th:text="#{login.errore}"></span>
+				</div>
+				<form th:action="@{/login}" method="post" class="container align-items-center">
+					<div class="container col-12 col-md-4 px-0 my-1">
+						<div class="form-floating">
+							<input id="username" name="username" type="text" class="form-control"
+								placeholder=" " required>
+							<label for="username" th:text="#{app.username}"></label>
+						</div>
+					</div>
+					<div class="container col-12 col-md-4 px-0 mb-1">
+						<div class="form-floating">
+							<input id="password" name="password" type="password" class="form-control"
+								placeholder=" " required>
+							<label for="password" th:text="#{app.password}"></label>
+						</div>
+					</div>
+					<div class="container col-12 col-md-4 px-0 d-grid">
+						<button class="btn btn-primary" type="submit">
+							<i class="bi bi-box-arrow-in-left"></i>
+							<span class="ps-1" th:text="#{login.login}"></span>
+						</button>
+					</div>
+				</form>
+				<div class="text-center">
+					<span th:text="#{login.registrati}"></span>
+					<a th:href="@{/register}" th:text="#{app.qui}"></a>
+				</div>
+			</section>
+		</main>
+
+	</body>
+
+</html>
